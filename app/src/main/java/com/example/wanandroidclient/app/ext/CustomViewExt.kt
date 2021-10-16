@@ -1,6 +1,7 @@
 package com.example.wanandroidclient.app.ext
 
 import android.app.Activity
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -13,6 +14,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.jetpackmvvm.base.appContext
 import com.example.wanandroidclient.app.util.SettingUtil
+import com.example.wanandroidclient.app.weight.loadCallback.LoadingCallback
 import com.example.wanandroidclient.ui.fragment.home.HomeFragment
 import com.example.wanandroidclient.ui.fragment.project.ProjectFragment
 import com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment
@@ -20,6 +22,7 @@ import com.example.wanandroidclient.ui.fragment.tree.TreeArrFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 
 /**
  * 作者　: mmh
@@ -27,6 +30,24 @@ import com.kingja.loadsir.core.LoadService
  * 描述　: 项目中自定义的视图拓展函数
  */
 
+
+/**
+ * 设置加载中
+ */
+fun LoadService<*>.showLoading() {
+    this.showCallback(LoadingCallback::class.java)
+}
+/*
+* 初始化loadSir*/
+fun loadServiceInit(view : View, callback: () -> Unit) :LoadService<Any>{
+    val loadsir = LoadSir.getDefault().register(view){
+        //点击重试时触发的操作
+        callback.invoke()
+    }
+    loadsir.showSuccess()
+    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadsir)
+    return loadsir
+}
 
 /*
 
