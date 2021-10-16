@@ -2,6 +2,7 @@ package com.example.wanandroidclient.viewmodel.request
 
 import androidx.lifecycle.MutableLiveData
 import com.example.jetpackmvvm.base.viewmodel.BaseViewModel
+import com.example.jetpackmvvm.ext.request
 import com.example.jetpackmvvm.state.ResultState
 import com.example.wanandroidclient.app.network.stateCallback.ListDataUiState
 import com.example.wanandroidclient.data.model.bean.AriticleResponse
@@ -34,6 +35,7 @@ class RequestHomeViewModel : BaseViewModel(){
         if (isRefresh) {
             pageNo = 0
         }
+
 
     }
 }
