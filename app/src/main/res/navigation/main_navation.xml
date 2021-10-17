@@ -9,5 +9,35 @@
         android:id="@+id/mainFragment"
         android:name="com.example.wanandroidclient.ui.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/projectFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.project.ProjectFragment"
+        android:label="fragment_project"
+        tools:layout="@layout/fragment_project" />
+    <fragment
+        android:id="@+id/publicNumberFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment"
+        android:label="fragment_public_number"
+        tools:layout="@layout/fragment_public_number" />
+    <fragment
+        android:id="@+id/treeArrFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.tree.TreeArrFragment"
+        android:label="TreeArrFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

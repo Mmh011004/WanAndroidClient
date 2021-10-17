@@ -2,12 +2,10 @@ package com.example.wanandroidclient.ui.fragment.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jetpackmvvm.ext.view.nav
+import com.example.jetpackmvvm.ext.nav
+import com.example.jetpackmvvm.ext.navigateAction
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.base.BaseFragment
 import com.example.wanandroidclient.app.ext.init
@@ -57,14 +55,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             init("首页")
             inflateMenu(R.menu.home_menu)
             //点击事件待做
-            /*setOnMenuItemClickListener {
-
-            }*/
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.home_search -> {
+                        nav().navigateAction(R.id.action_mainFragment_to_searchFragment)
+                    }
+                }
+                true
+            }
 
 
         }
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context),articleAdapter)
+        recyclerView.init(LinearLayoutManager(context),articleAdapter).let {
+
+        }
 
     }
 

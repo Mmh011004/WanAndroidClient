@@ -1,4 +1,4 @@
-package com.example.jetpackmvvm.ext.view
+package com.example.jetpackmvvm.ext
 
 import android.os.Bundle
 import android.view.View
