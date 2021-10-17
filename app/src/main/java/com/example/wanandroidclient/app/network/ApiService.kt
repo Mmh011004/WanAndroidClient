@@ -6,6 +6,7 @@ import com.example.wanandroidclient.data.model.bean.AriticleResponse
 import com.example.wanandroidclient.data.model.bean.BannerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * 作者　: mmh
@@ -34,5 +35,26 @@ interface ApiService {
      */
     @GET("article/list/{page}/json")
     suspend fun getAritrilList(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
+    /**
+     * 项目分类标题
+     */
+/*    @GET("project/tree/json")
+    suspend fun getProjecTitle(): ApiResponse<ArrayList<ClassifyResponse>>*/
+
+    /**
+     * 根据分类id获取项目数据
+     */
+    @GET("project/list/{page}/json")
+    suspend fun getProjecDataByType(
+        @Path("page") pageNo: Int,
+        @Query("cid") cid: Int
+    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
+    /**
+     * 获取最新项目数据
+     */
+    @GET("article/listproject/{page}/json")
+    suspend fun getProjecNewData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
 }

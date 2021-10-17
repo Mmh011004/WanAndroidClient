@@ -4,9 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.example.jetpackmvvm.ext.request
 import com.example.jetpackmvvm.state.ResultState
+import com.example.wanandroidclient.app.network.apiService
 import com.example.wanandroidclient.app.network.stateCallback.ListDataUiState
 import com.example.wanandroidclient.data.model.bean.AriticleResponse
 import com.example.wanandroidclient.data.model.bean.BannerResponse
+import com.example.wanandroidclient.data.repository.request.HttpRequestCoroutine
 
 /**
  * 作者　: mmh
@@ -35,7 +37,37 @@ class RequestHomeViewModel : BaseViewModel(){
         if (isRefresh) {
             pageNo = 0
         }
-
-
+        request({ HttpRequestCoroutine.getHomeData(pageNo)}, {
+            //请求数据
+            pageNo++
+            val listDataUiState =
+                ListDataUiState(
+                    isSuccess = true,
+                    isRefresh = isRefresh,
+                    isEmpty = it.isEmpty(),
+                    hasMore = it.hasMore(),
+                    isFirstEmpty = isRefresh && it.isEmpty(),
+                    listData = it.datas
+                )
+            homeDataState.value =listDataUiState
+        },{
+            //请求失败
+            val listDataUiState =
+                ListDataUiState(
+                    isSuccess = false,
+                    errorMessage = it.errorMsg,
+                    isRefresh = isRefresh,
+                    listData = arrayListOf<AriticleResponse>()
+                )
+            homeDataState.value = listDataUiState
+        })
     }
+
+    /**
+     * 获取轮播图数据
+     */
+    fun getBannerData() {
+        request({ apiService.getBanner() }, bannerData)
+    }
+
 }

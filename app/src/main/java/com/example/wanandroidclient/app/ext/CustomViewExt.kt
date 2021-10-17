@@ -9,9 +9,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
 import com.example.wanandroidclient.app.util.SettingUtil
 import com.example.wanandroidclient.app.weight.loadCallback.LoadingCallback
@@ -19,10 +21,12 @@ import com.example.wanandroidclient.ui.fragment.home.HomeFragment
 import com.example.wanandroidclient.ui.fragment.project.ProjectFragment
 import com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment
 import com.example.wanandroidclient.ui.fragment.tree.TreeArrFragment
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
  * 作者　: mmh
@@ -30,6 +34,43 @@ import com.kingja.loadsir.core.LoadSir
  * 描述　: 项目中自定义的视图拓展函数
  */
 
+//设置适配器动画列表
+fun BaseQuickAdapter<*,*>.setAdapterAnimation(mode : Int){
+    //等于0，关闭动画列表
+    if (mode == 0) {
+        this.animationEnable = false
+    } else {
+        this.animationEnable = true
+        this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode - 1])
+    }
+}
+
+
+//绑定SwipeRecyclerView
+fun SwipeRecyclerView.init(
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
+): SwipeRecyclerView {
+    layoutManager = layoutManger
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
+}
+
+
+
+
+
+/**
+ * 初始化普通的toolbar 只设置标题
+ */
+fun Toolbar.init(titleStr: String = ""): Toolbar {
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    title = titleStr
+    return this
+}
 
 /**
  * 设置加载中
