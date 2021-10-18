@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        loadSir = loadServiceInit(swipeRefresh){
+        loadSir = loadServiceInit(swipeRefresh) {
             //这里是一个lambda高阶函数，是关于方法loadServiceInit的callback的lambda函数
 
             //点击重试时触发的操作
@@ -76,12 +76,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
         }
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context),articleAdapter).let {
+        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
             footView = it.initFooter(//实现SwipeRecyclerView.LoadMoreListener接口
                 SwipeRecyclerView.LoadMoreListener {
-                requestHomeViewModel.getHomeData(false)
-            })
+                    requestHomeViewModel.getHomeData(false)
+                })
             //FloatBtn的行为没有自定义
             // it.initFloatBtn(floatbtn)
         }
@@ -91,12 +91,23 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             //触发刷新监听时请求数据
             requestHomeViewModel.getHomeData(true)
         }
-        articleAdapter.run {  }
+        articleAdapter.run {
+
+
+            setOnItemClickListener { adapter, view, position ->
+                nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
+                    //Intent传递对象的方法之一
+                    putParcelable(
+                        "ariticleData",
+                        articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount])
+                })
+            }
+
+        }
 
     }
-
-
 }
+
 
 
 
