@@ -4,18 +4,24 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ConvertUtils
 import com.example.jetpackmvvm.ext.nav
 import com.example.jetpackmvvm.ext.navigateAction
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.base.BaseFragment
 import com.example.wanandroidclient.app.ext.init
+import com.example.wanandroidclient.app.ext.initFooter
 import com.example.wanandroidclient.app.ext.loadServiceInit
 import com.example.wanandroidclient.app.ext.showLoading
+import com.example.wanandroidclient.app.weight.recyclerview.DefineLoadMoreView
+import com.example.wanandroidclient.app.weight.recyclerview.SpaceItemDecoration
 import com.example.wanandroidclient.databinding.FragmentHomeBinding
 import com.example.wanandroidclient.ui.adapter.AriticleAdapter
 import com.example.wanandroidclient.viewmodel.request.RequestHomeViewModel
 import com.example.wanandroidclient.viewmodel.state.HomeViewModel
 import com.kingja.loadsir.core.LoadService
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import kotlinx.android.synthetic.main.include_list.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
@@ -35,6 +41,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     //请求数据ViewModel
     private val requestHomeViewModel: RequestHomeViewModel by viewModels()
+
+    //加载更多视图
+    private  lateinit var footView : DefineLoadMoreView
 
     override fun layoutId(): Int {
         return R.layout.fragment_home
@@ -68,8 +77,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context),articleAdapter).let {
-
+            it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
+            footView = it.initFooter(//实现SwipeRecyclerView.LoadMoreListener接口
+                SwipeRecyclerView.LoadMoreListener {
+                requestHomeViewModel.getHomeData(false)
+            })
+            //FloatBtn的行为没有自定义
+            // it.initFloatBtn(floatbtn)
         }
+
+        //初始化SwipeRefreshLayout
+        swipeRefresh.init {
+            //触发刷新监听时请求数据
+            requestHomeViewModel.getHomeData(true)
+        }
+        articleAdapter.run {  }
 
     }
 

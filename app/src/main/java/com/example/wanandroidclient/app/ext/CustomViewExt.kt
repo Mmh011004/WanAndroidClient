@@ -3,11 +3,7 @@ package com.example.wanandroidclient.app.ext
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,12 +13,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
 import com.example.wanandroidclient.app.util.SettingUtil
 import com.example.wanandroidclient.app.weight.loadCallback.LoadingCallback
+import com.example.wanandroidclient.app.weight.recyclerview.DefineLoadMoreView
 import com.example.wanandroidclient.ui.fragment.home.HomeFragment
 import com.example.wanandroidclient.ui.fragment.project.ProjectFragment
 import com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment
 import com.example.wanandroidclient.ui.fragment.tree.TreeArrFragment
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -33,6 +28,38 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * 时间　: 2021/10/14
  * 描述　: 项目中自定义的视图拓展函数
  */
+//初始化 SwipeRefreshLayout
+fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
+    this.run {
+        setOnRefreshListener {
+            onRefreshListener.invoke()
+        }
+        //设置主题颜色
+        setColorSchemeColors(SettingUtil.getColor(appContext))
+    }
+}
+/*
+* 初始化底部的加载更多的视图*/
+fun SwipeRecyclerView.initFooter(loadMoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
+    val footerView = DefineLoadMoreView(appContext)
+    //给尾部设置颜色
+    footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
+    //设置加载更多的监听器
+    //设置尾部点击回调
+    footerView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
+        footerView.onLoading()
+        loadMoreListener.onLoadMore()
+    })
+    this.run {
+        //添加加载更多尾部
+        addFooterView(footerView)
+        setLoadMoreView(footerView)
+        //设置加载更多回调
+        setLoadMoreListener(loadMoreListener)
+    }
+    return footerView
+}
+
 
 //设置适配器动画列表
 fun BaseQuickAdapter<*,*>.setAdapterAnimation(mode : Int){
