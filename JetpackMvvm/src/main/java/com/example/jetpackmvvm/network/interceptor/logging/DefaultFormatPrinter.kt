@@ -1,11 +1,11 @@
 package me.hgj.jetpackmvvm.network.interceptor.logging
 
 import android.text.TextUtils
-import me.hgj.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isJson
-import me.hgj.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isXml
+import com.example.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isJson
+import com.example.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isXml
+import com.example.jetpackmvvm.util.LogUtils
 import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.jsonFormat
 import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.xmlFormat
-import me.hgj.jetpackmvvm.util.LogUtils
 import okhttp3.MediaType
 import okhttp3.Request
 

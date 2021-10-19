@@ -11,8 +11,6 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.blankj.utilcode.util.ToastUtils
-import com.example.jetpackmvvm.ext.view.navigateAction
-import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.util.CacheUtil
 import com.example.wanandroidclient.app.util.SettingUtil
 import java.io.BufferedReader

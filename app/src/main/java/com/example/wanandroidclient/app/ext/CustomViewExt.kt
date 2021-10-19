@@ -3,7 +3,11 @@ package com.example.wanandroidclient.app.ext
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,13 +15,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
+import com.example.wanandroidclient.R
+import com.example.wanandroidclient.app.network.stateCallback.ListDataUiState
 import com.example.wanandroidclient.app.util.SettingUtil
+import com.example.wanandroidclient.app.weight.loadCallback.EmptyCallback
+import com.example.wanandroidclient.app.weight.loadCallback.ErrorCallback
 import com.example.wanandroidclient.app.weight.loadCallback.LoadingCallback
 import com.example.wanandroidclient.app.weight.recyclerview.DefineLoadMoreView
 import com.example.wanandroidclient.ui.fragment.home.HomeFragment
 import com.example.wanandroidclient.ui.fragment.project.ProjectFragment
 import com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment
 import com.example.wanandroidclient.ui.fragment.tree.TreeArrFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -28,6 +37,76 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * 时间　: 2021/10/14
  * 描述　: 项目中自定义的视图拓展函数
  */
+
+fun LoadService<*>.setErrorText(message: String) {
+    if (message.isNotEmpty()) {
+        this.setCallBack(ErrorCallback::class.java) { _, view ->
+            view.findViewById<TextView>(R.id.error_text).text = message
+        }
+    }
+}
+
+/**
+ * 设置错误布局
+ * @param message 错误布局显示的提示内容
+ */
+fun LoadService<*>.showError(message: String = "") {
+    this.setErrorText(message)
+    this.showCallback(ErrorCallback::class.java)
+}
+
+
+/**
+ * 设置空布局
+ */
+fun LoadService<*>.showEmpty() {
+    this.showCallback(EmptyCallback::class.java)
+}
+
+/**
+ * 加载列表数据
+ */
+fun <T> loadListData(
+    data : ListDataUiState<T>,
+    baseQuickAdapter: BaseQuickAdapter<T,*>,
+    loadService : LoadService<*>,
+    recyclerView: SwipeRecyclerView,
+    swipeRefreshLayout: SwipeRefreshLayout
+){
+    swipeRefreshLayout.isRefreshing = false
+    recyclerView.loadMoreFinish(data.isEmpty,data.hasMore)
+    if (data.isSuccess){
+        //数据请求成功
+        when{
+            //第一页没有数据，显示空布局
+            data.isFirstEmpty -> {
+                loadService.showEmpty()
+            }
+            //是第一页
+            data.isRefresh ->{
+                baseQuickAdapter.setList(data.listData)
+                loadService.showSuccess()
+            }
+            //不是第一页
+            else -> {
+                baseQuickAdapter.addData(data.listData)
+                loadService.showSuccess()
+            }
+        }
+    } else{
+        //失败
+        if (data.isRefresh) {
+            //如果是第一页，则显示错误界面，并提示错误信息
+            loadService.showError(data.errorMessage)
+        } else {
+            recyclerView.loadMoreError(0, data.errorMessage)
+        }
+    }
+}
+
+
+
+
 //初始化 SwipeRefreshLayout
 fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
     this.run {
@@ -117,14 +196,11 @@ fun loadServiceInit(view : View, callback: () -> Unit) :LoadService<Any>{
     return loadsir
 }
 
-/*
-
-*/
 /**
  * 根据控件的类型设置主题，注意，控件具有优先级， 基本类型的控件建议放到最后，像 Textview，FragmentLayout，不然会出现问题，
  * 列如下面的BottomNavigationViewEx他的顶级父控件为FragmentLayout，如果先 is Fragmentlayout判断在 is BottomNavigationViewEx上面
  * 那么就会直接去执行 is FragmentLayout的代码块 跳过 is BottomNavigationViewEx的代码块了
- *//*
+ */
 
 fun setUiTheme(color: Int, vararg anyList: Any?) {
     anyList.forEach { view ->
@@ -149,7 +225,7 @@ fun setUiTheme(color: Int, vararg anyList: Any?) {
         }
     }
 }
-*/
+
 
 //初始化BottomNavigationViewEx
 fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): BottomNavigationViewEx {

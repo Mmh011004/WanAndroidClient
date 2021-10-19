@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.blankj.utilcode.util.VibrateUtils
-import com.example.jetpackmvvm.ext.view.nav
-import com.example.jetpackmvvm.ext.view.navigateAction
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.util.CacheUtil
 
