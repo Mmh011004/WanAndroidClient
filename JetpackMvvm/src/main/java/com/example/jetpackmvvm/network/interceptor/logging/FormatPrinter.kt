@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.network.interceptor.logging
+package com.example.jetpackmvvm.network.interceptor.logging
 
 import okhttp3.MediaType
 import okhttp3.Request

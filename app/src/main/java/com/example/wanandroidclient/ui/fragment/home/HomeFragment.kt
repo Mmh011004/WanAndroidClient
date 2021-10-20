@@ -50,6 +50,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     //加载更多视图
     private  lateinit var footView : DefineLoadMoreView
 
+    //收藏ViewModel TODO
+
     override fun layoutId(): Int {
         return R.layout.fragment_home
     }
@@ -83,12 +85,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
-            footView = it.initFooter(//实现SwipeRecyclerView.LoadMoreListener接口
-                SwipeRecyclerView.LoadMoreListener {
+            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+                    //实现SwipeRecyclerView.LoadMoreListener接口
                     requestHomeViewModel.getHomeData(false)
                 })
             //FloatBtn的行为没有自定义
-            // it.initFloatBtn(floatbtn)
+            // it.initFloatBtn(floatbtn)TODO
         }
 
         //初始化SwipeRefreshLayout
@@ -98,6 +100,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         articleAdapter.run {
 
+            //TODO setCollectClick
 
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {

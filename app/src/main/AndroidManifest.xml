@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-sdk tools:overrideLibrary="com.example.wanandroidclient"/>
+
     <application
         android:name=".app.App"
         android:allowBackup="true"

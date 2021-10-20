@@ -1,6 +1,5 @@
 package com.example.wanandroidclient.app.network
 
-import android.os.PersistableBundle
 import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.network.BaseNetworkApi
 import com.example.jetpackmvvm.network.interceptor.CacheInterceptor

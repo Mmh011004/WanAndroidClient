@@ -3,10 +3,8 @@ package com.example.jetpackmvvm.network.interceptor.logging
 import android.util.Log
 import com.example.jetpackmvvm.util.ZipHelper.Companion.decompressForGzip
 import com.example.jetpackmvvm.util.ZipHelper.Companion.decompressToStringForZlib
-import me.hgj.jetpackmvvm.network.interceptor.logging.DefaultFormatPrinter
-import me.hgj.jetpackmvvm.network.interceptor.logging.FormatPrinter
-import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.jsonFormat
-import me.hgj.jetpackmvvm.util.UrlEncoderUtils.Companion.hasUrlEncoded
+import com.example.jetpackmvvm.util.CharacterHandler.Companion.jsonFormat
+import com.example.jetpackmvvm.util.UrlEncoderUtils.Companion.hasUrlEncoded
 import okhttp3.*
 import okio.Buffer
 import java.io.IOException

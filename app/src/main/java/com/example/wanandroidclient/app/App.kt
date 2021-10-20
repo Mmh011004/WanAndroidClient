@@ -59,7 +59,7 @@ class App : BaseApp(){
             .addCallback(EmptyCallback())//空
             .setDefaultCallback(SuccessCallback::class.java)//设置默认加载状态页
             .commit()
-
+/*
         //初始化bugly，bugly是腾讯的一个崩溃统计
         val context = applicationContext
         // 获取当前包名
@@ -69,8 +69,9 @@ class App : BaseApp(){
         // 设置是否为上报进程
         val strategy = CrashReport.UserStrategy(context)
         strategy.isUploadProcess = processName == null || processName == packageName
+
         // 初始化Bugly
-        Bugly.init(context, if (BuildConfig.DEBUG) "xxx" else "a52f2b5ebb", BuildConfig.DEBUG)
+        Bugly.init(context, if (BuildConfig.DEBUG) "xxx" else "a52f2b5ebb", BuildConfig.DEBUG)*/
         "".logd()
         jetpackMvvmLog = BuildConfig.DEBUG
     }

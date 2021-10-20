@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.util
+package com.example.jetpackmvvm.util
 
 import android.text.InputFilter
 import android.text.Spanned
@@ -15,7 +15,6 @@ import javax.xml.transform.TransformerException
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
-import kotlin.experimental.and
 
 /**
  * 作者　: hegaojian

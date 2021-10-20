@@ -15,6 +15,7 @@ class LoadingCallback : Callback() {
         return R.layout.layout_loading
     }
 
+    //retry
     override fun onReloadEvent(context: Context?, view: View?): Boolean {
         return true
     }

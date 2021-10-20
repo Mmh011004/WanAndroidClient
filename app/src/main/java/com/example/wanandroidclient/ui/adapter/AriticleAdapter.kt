@@ -1,8 +1,6 @@
 package com.example.wanandroidclient.ui.adapter
 
 import android.text.TextUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -44,37 +42,37 @@ BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
         }
     }
 
-    override fun convert(holder: BaseViewHolder, item: AriticleResponse) {
-        when(holder.itemViewType){
+    override fun convert(helper: BaseViewHolder, item: AriticleResponse) {
+        when(helper.itemViewType){
             Ariticle ->{
                 //文章布局赋值
                 item.run {
-                    holder.setText(
+                    helper.setText(
                         R.id.item_home_author,
                         //Api文档中有解释
                         if (author.isNotEmpty()) author else shareUser
                     )
-                    holder.setText(R.id.item_home_content,title.toHtml())
+                    helper.setText(R.id.item_home_content,title.toHtml())
                     //分类
-                    holder.setText(R.id.item_home_type2, "$superChapterName·$chapterName".toHtml())
+                    helper.setText(R.id.item_home_type2, "$superChapterName·$chapterName".toHtml())
                     //时间
-                    holder.setText(R.id.item_home_date, niceDate)
+                    helper.setText(R.id.item_home_date, niceDate)
 
                     if (showTag) {
                         //展示标签
-                        holder.setGone(R.id.item_home_new, !fresh)
-                        holder.setGone(R.id.item_home_top, type != 1)
+                        helper.setGone(R.id.item_home_new, !fresh)
+                        helper.setGone(R.id.item_home_top, type != 1)
                         if (tags.isNotEmpty()) {
-                            holder.setGone(R.id.item_home_type1, false)
-                            holder.setText(R.id.item_home_type1, tags[0].name)
+                            helper.setGone(R.id.item_home_type1, false)
+                            helper.setText(R.id.item_home_type1, tags[0].name)
                         } else {
-                            holder.setGone(R.id.item_home_type1, true)
+                            helper.setGone(R.id.item_home_type1, true)
                         }
                     } else {
                         //隐藏所有标签
-                        holder.setGone(R.id.item_home_top, true)
-                        holder.setGone(R.id.item_home_type1, true)
-                        holder.setGone(R.id.item_home_new, true)
+                        helper.setGone(R.id.item_home_top, true)
+                        helper.setGone(R.id.item_home_type1, true)
+                        helper.setGone(R.id.item_home_new, true)
                     }
                 }
 
@@ -83,32 +81,32 @@ BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
             Project-> {
 //项目布局的赋值
                 item.run {
-                    holder.setText(
+                    helper.setText(
                         R.id.item_project_author,
                         if (author.isNotEmpty()) author else shareUser
                     )
-                    holder.setText(R.id.item_project_title, title.toHtml())
-                    holder.setText(R.id.item_project_content, desc.toHtml())
-                    holder.setText(
+                    helper.setText(R.id.item_project_title, title.toHtml())
+                    helper.setText(R.id.item_project_content, desc.toHtml())
+                    helper.setText(
                         R.id.item_project_type,
                         "$superChapterName·$chapterName".toHtml()
                     )
-                    holder.setText(R.id.item_project_date, niceDate)
+                    helper.setText(R.id.item_project_date, niceDate)
                     if (showTag) {
                         //展示标签
-                        holder.setGone(R.id.item_project_new, !fresh)
-                        holder.setGone(R.id.item_project_top, type != 1)
+                        helper.setGone(R.id.item_project_new, !fresh)
+                        helper.setGone(R.id.item_project_top, type != 1)
                         if (tags.isNotEmpty()) {
-                            holder.setGone(R.id.item_project_type1, false)
-                            holder.setText(R.id.item_project_type1, tags[0].name)
+                            helper.setGone(R.id.item_project_type1, false)
+                            helper.setText(R.id.item_project_type1, tags[0].name)
                         } else {
-                            holder.setGone(R.id.item_project_type1, true)
+                            helper.setGone(R.id.item_project_type1, true)
                         }
                     } else {
                         //隐藏所有标签
-                        holder.setGone(R.id.item_project_top, true)
-                        holder.setGone(R.id.item_project_type1, true)
-                        holder.setGone(R.id.item_project_new, true)
+                        helper.setGone(R.id.item_project_top, true)
+                        helper.setGone(R.id.item_project_type1, true)
+                        helper.setGone(R.id.item_project_new, true)
                     }
 
                 }

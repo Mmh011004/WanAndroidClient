@@ -1,11 +1,11 @@
-package me.hgj.jetpackmvvm.network.interceptor.logging
+package com.example.jetpackmvvm.network.interceptor.logging
 
 import android.text.TextUtils
 import com.example.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isJson
 import com.example.jetpackmvvm.network.interceptor.logging.LogInterceptor.Companion.isXml
 import com.example.jetpackmvvm.util.LogUtils
-import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.jsonFormat
-import me.hgj.jetpackmvvm.util.CharacterHandler.Companion.xmlFormat
+import com.example.jetpackmvvm.util.CharacterHandler.Companion.jsonFormat
+import com.example.jetpackmvvm.util.CharacterHandler.Companion.xmlFormat
 import okhttp3.MediaType
 import okhttp3.Request
 
@@ -14,7 +14,7 @@ import okhttp3.Request
  * 时间　: 2020/3/26
  * 描述　:
  */
-class DefaultFormatPrinter : FormatPrinter{
+class DefaultFormatPrinter : FormatPrinter {
     /**
      * 打印网络请求信息, 当网络请求时 {[okhttp3.RequestBody]} 可以解析的情况
      *
