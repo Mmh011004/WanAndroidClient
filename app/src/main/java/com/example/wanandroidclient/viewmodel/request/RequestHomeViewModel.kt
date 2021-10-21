@@ -3,6 +3,7 @@ package com.example.wanandroidclient.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.example.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.example.jetpackmvvm.ext.request
+import com.example.jetpackmvvm.ext.util.logd
 import com.example.jetpackmvvm.state.ResultState
 import com.example.wanandroidclient.app.network.apiService
 import com.example.wanandroidclient.app.network.stateCallback.ListDataUiState
@@ -50,6 +51,7 @@ class RequestHomeViewModel : BaseViewModel(){
                     listData = it.datas
                 )
             homeDataState.value =listDataUiState
+            "RequestHomeViewModel: $homeDataState".logd()
         },{
             //请求失败
             val listDataUiState =

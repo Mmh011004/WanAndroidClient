@@ -1,6 +1,7 @@
 package com.example.wanandroidclient.app.ext
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
@@ -38,6 +39,7 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * 描述　: 项目中自定义的视图拓展函数
  */
 
+const val TAG = "CustomViewExt"
 fun LoadService<*>.setErrorText(message: String) {
     if (message.isNotEmpty()) {
         this.setCallBack(ErrorCallback::class.java) { _, view ->
@@ -85,6 +87,7 @@ fun <T> loadListData(
             //是第一页
             data.isRefresh ->{
                 baseQuickAdapter.setList(data.listData)
+                Log.d(TAG, "loadListData: setList是否执行")
                 loadService.showSuccess()
             }
             //不是第一页
@@ -93,6 +96,7 @@ fun <T> loadListData(
                 loadService.showSuccess()
             }
         }
+        Log.d(TAG, "loadListData: ${baseQuickAdapter.data}")
     } else{
         //失败
         if (data.isRefresh) {

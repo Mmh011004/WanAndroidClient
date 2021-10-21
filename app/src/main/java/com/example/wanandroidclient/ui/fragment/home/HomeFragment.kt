@@ -1,6 +1,7 @@
 package com.example.wanandroidclient.ui.fragment.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.example.jetpackmvvm.ext.nav
 import com.example.jetpackmvvm.ext.navigateAction
+import com.example.jetpackmvvm.ext.util.logd
 import com.example.jetpackmvvm.ext.view.parseState
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+const val TAG = "HomeFragment"
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     //适配器
@@ -84,6 +87,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+            Log.d(TAG, "initView: $articleAdapter")
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
                     //实现SwipeRecyclerView.LoadMoreListener接口
@@ -111,7 +115,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                     )
                 })
             }
-
             //设置Item的子View的点击事件
             addChildClickViewIds(R.id.item_home_author,R.id.item_project_author)
             setOnItemClickListener { adapter, view, position ->
@@ -150,9 +153,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun createObserver() {
         requestHomeViewModel.run {
+            Log.d(TAG, "createObserver: 开始执行")
             //监听首页文章列表的数据更新
             homeDataState.observe(viewLifecycleOwner, Observer {
                 loadListData(it, articleAdapter, loadSir, recyclerView, swipeRefresh)
+                //Log.d(TAG, "createObserver: ${articleAdapter.data}")
             })
             //监听轮播图的数据更新
             bannerData.observe(viewLifecycleOwner, Observer { resultState ->

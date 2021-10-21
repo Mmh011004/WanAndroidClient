@@ -1,6 +1,8 @@
 package com.example.wanandroidclient.ui.adapter
 
 import android.text.TextUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -19,7 +21,7 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?):
 BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
 
     private val Ariticle = 1//文章类型
-    private val Project = 2//项目类型 本来打算不区分文章和项目布局用统一布局的，但是布局完以后发现差异化蛮大的，所以还是分开吧
+    private val Project = 2//项目类型
     private var showTag = false//是否展示标签 tag 一般主页才用的到
 
     constructor(data: MutableList<AriticleResponse>?, showTag: Boolean) : this(data) {
@@ -79,7 +81,7 @@ BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
             }
 
             Project-> {
-//项目布局的赋值
+                //项目布局的赋值
                 item.run {
                     helper.setText(
                         R.id.item_project_author,
@@ -109,10 +111,13 @@ BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
                         helper.setGone(R.id.item_project_new, true)
                     }
 
+                    Glide.with(context).load(envelopePic)
+                        .transition(DrawableTransitionOptions.withCrossFade(500))
+                        .into(helper.getView(R.id.item_project_imageview))
+
                 }
             }
         }
     }
-
 
 }
