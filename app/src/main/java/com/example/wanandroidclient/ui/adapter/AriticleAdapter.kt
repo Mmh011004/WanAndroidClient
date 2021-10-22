@@ -17,6 +17,13 @@ import com.example.wanandroidclient.data.model.bean.AriticleResponse
  * 时间　: 2021/10/17
  * 描述　: 文章适配器
  */
+
+/*
+* 在实现HomeFragment的时候，数据有返回
+* 但是数据显示不上页面
+* 报错信息为  no adapter
+* 在检查布局文件后
+* 发现LinearLayout的布局方向没有设置，设置后数据终于显示在了页面上*/
 class AriticleAdapter(data: MutableList<AriticleResponse>?):
 BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
 
@@ -45,6 +52,7 @@ BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data){
     }
 
     override fun convert(helper: BaseViewHolder, item: AriticleResponse) {
+
         when(helper.itemViewType){
             Ariticle ->{
                 //文章布局赋值

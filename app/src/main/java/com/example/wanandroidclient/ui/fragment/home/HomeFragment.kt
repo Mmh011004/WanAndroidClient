@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.example.jetpackmvvm.ext.nav
 import com.example.jetpackmvvm.ext.navigateAction
 import com.example.jetpackmvvm.ext.util.logd
@@ -56,6 +57,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     //收藏ViewModel TODO
 
     override fun layoutId(): Int {
+        Log.d(TAG, "layoutId: 加载布局")
         return R.layout.fragment_home
     }
 
@@ -87,7 +89,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
-            Log.d(TAG, "initView: $articleAdapter")
+            //Log.d(TAG, "initView: $articleAdapter")
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
                     //实现SwipeRecyclerView.LoadMoreListener接口
@@ -102,22 +104,25 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             //触发刷新监听时请求数据
             requestHomeViewModel.getHomeData(true)
         }
+
+
         articleAdapter.run {
 
             //TODO setCollectClick
 
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    //Intent传递对象的方法之一
+                    //Bundle传递对象的方法之一
                     putParcelable(
                         "ariticleData",
                         articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount]
                     )
                 })
+                Log.d(TAG, "initView: 跳转web")
             }
             //设置Item的子View的点击事件
             addChildClickViewIds(R.id.item_home_author,R.id.item_project_author)
-            setOnItemClickListener { adapter, view, position ->
+            setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.item_home_author,R.id.item_project_author -> {
                         nav().navigateAction(
@@ -130,7 +135,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                             }
                         )
                     }
+                    
                 }
+                Log.d(TAG, "initView: ${view.id}")
             }
 
         }
