@@ -31,7 +31,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     //是否第一次加载
     private var isFirst = true
 
-    lateinit var mViewModel: BaseViewModel
+    lateinit var mViewModel: VM
 
     lateinit var mActivity: AppCompatActivity
 

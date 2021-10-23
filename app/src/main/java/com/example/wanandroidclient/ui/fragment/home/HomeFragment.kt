@@ -122,6 +122,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             }
             //设置Item的子View的点击事件
             addChildClickViewIds(R.id.item_home_author,R.id.item_project_author)
+            //在此处出现bug：点击事件无响应，解决  在addChildClickViewIds，应该是设置子View的监听器：setOnItemChildClickListener
+            //而不是使用setOnItemClickListener
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.item_home_author,R.id.item_project_author -> {
