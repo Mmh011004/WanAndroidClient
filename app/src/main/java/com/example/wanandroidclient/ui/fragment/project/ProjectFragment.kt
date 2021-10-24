@@ -2,25 +2,31 @@ package com.example.wanandroidclient.ui.fragment.project
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.wanandroidclient.R
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProjectFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProjectFragment : Fragment() {
+import com.example.wanandroidclient.app.base.BaseFragment
+import com.example.wanandroidclient.databinding.FragmentViewpagerBinding
+import com.example.wanandroidclient.viewmodel.state.ProjectViewModel
+import com.kingja.loadsir.core.LoadService
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project, container, false)
+class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>() {
+
+    //状态管理者
+    private lateinit var loadsir: LoadService<Any>
+
+    //Fragment集合
+    var fragments: ArrayList<Fragment> = arrayListOf()
+
+    //标题集合
+    var mDataList: ArrayList<String> = arrayListOf()
+
+
+
+    override fun layoutId(): Int {
+        return R.layout.fragment_viewpager
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
     }
 
 }
