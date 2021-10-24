@@ -1,8 +1,12 @@
 package com.example.wanandroidclient.app.ext
 
 import android.app.Activity
+import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -24,6 +28,7 @@ import com.example.wanandroidclient.app.weight.loadCallback.EmptyCallback
 import com.example.wanandroidclient.app.weight.loadCallback.ErrorCallback
 import com.example.wanandroidclient.app.weight.loadCallback.LoadingCallback
 import com.example.wanandroidclient.app.weight.recyclerview.DefineLoadMoreView
+import com.example.wanandroidclient.app.weight.viewpager.ScaleTransitionPagerTitleView
 import com.example.wanandroidclient.ui.fragment.home.HomeFragment
 import com.example.wanandroidclient.ui.fragment.project.ProjectFragment
 import com.example.wanandroidclient.ui.fragment.publicNumber.PublicNumberFragment
@@ -33,6 +38,14 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import net.lucode.hackware.magicindicator.MagicIndicator
+import net.lucode.hackware.magicindicator.buildins.UIUtil
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import java.lang.StringBuilder
 
 /**
  * 作者　: mmh
@@ -263,6 +276,73 @@ fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): Bo
     }
     return this
 }
+
+//初始化magic_indicator
+fun MagicIndicator.bindViewPager2(
+    viewPage: ViewPager2,
+    mStringList: List<String> = arrayListOf(),
+    action :(index: Int) -> Unit = {}){
+    val commonNavigator = CommonNavigator(appContext)
+    commonNavigator.adapter = object : CommonNavigatorAdapter(){
+        override fun getCount(): Int {
+            return mStringList.size
+        }
+
+        override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
+            return ScaleTransitionPagerTitleView(appContext).apply {
+                //设置文本
+                text = mStringList[index].toHtml()
+                //字体大小
+                textSize = 17f
+                //未选中的颜色
+                normalColor = Color.WHITE
+                //选中的颜色
+                selectedColor = Color.WHITE
+                //设置点击事件
+                setOnClickListener {
+                    viewPage.currentItem = index
+                    //invoke就是实现动态调用
+                    action.invoke(index)
+                }
+            }
+        }
+
+        override fun getIndicator(context: Context?): IPagerIndicator {
+            return LinePagerIndicator(context).apply {
+                mode = LinePagerIndicator.MODE_EXACTLY
+                //线条的宽高度
+                lineHeight = UIUtil.dip2px(appContext, 3.0).toFloat()
+                lineWidth = UIUtil.dip2px(appContext, 30.0).toFloat()
+                //线条的圆角
+                roundRadius = UIUtil.dip2px(appContext, 6.0).toFloat()
+                startInterpolator = AccelerateInterpolator()
+                endInterpolator = DecelerateInterpolator(2.0f)
+                //线条的颜色
+                setColors(Color.WHITE)
+            }
+        }
+    }
+    this.navigator = commonNavigator
+    // TODO: 2021/10/24 页面切换的回调 
+}
+
+//初始化ViewPager2
+fun ViewPager2.init(
+    fragment: Fragment,
+    fragments: ArrayList<Fragment>,
+    isUserInputEnabled: Boolean = true
+): ViewPager2{
+    //是否可以滑动
+    this.isUserInputEnabled = isUserInputEnabled
+    //设置适配器
+    adapter = object : FragmentStateAdapter(fragment){
+        override fun getItemCount(): Int = fragments.size
+        override fun createFragment(position: Int): Fragment = fragments[position]
+    }
+    return this
+}
+
+
 //初始化ViewPager2的函数
 fun ViewPager2.initMain(fragment: Fragment) : ViewPager2{
     //是否可以滑动

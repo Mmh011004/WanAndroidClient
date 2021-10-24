@@ -1,9 +1,6 @@
 package com.example.wanandroidclient.app.network
 
-import com.example.wanandroidclient.data.model.bean.ApiPagerResponse
-import com.example.wanandroidclient.data.model.bean.ApiResponse
-import com.example.wanandroidclient.data.model.bean.AriticleResponse
-import com.example.wanandroidclient.data.model.bean.BannerResponse
+import com.example.wanandroidclient.data.model.bean.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -39,14 +36,14 @@ interface ApiService {
     /**
      * 项目分类标题
      */
-/*    @GET("project/tree/json")
-    suspend fun getProjecTitle(): ApiResponse<ArrayList<ClassifyResponse>>*/
+    @GET("project/tree/json")
+    suspend fun getProjectTitle(): ApiResponse<ArrayList<ClassifyResponse>>
 
     /**
      * 根据分类id获取项目数据
      */
     @GET("project/list/{page}/json")
-    suspend fun getProjecDataByType(
+    suspend fun getProjectDataByType(
         @Path("page") pageNo: Int,
         @Query("cid") cid: Int
     ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
@@ -55,6 +52,7 @@ interface ApiService {
      * 获取最新项目数据
      */
     @GET("article/listproject/{page}/json")
-    suspend fun getProjecNewData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+    suspend fun getProjectNewData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
 
 }

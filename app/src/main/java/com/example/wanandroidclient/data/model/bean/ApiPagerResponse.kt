@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * 作者　: mmh
  * 时间　: 2021/10/16
- * 描述　:
+ * 描述　: 分页数据的基类
  */
 data class ApiPagerResponse<T>(
     var datas: T,

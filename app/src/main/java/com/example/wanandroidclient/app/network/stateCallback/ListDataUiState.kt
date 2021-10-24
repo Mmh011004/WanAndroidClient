@@ -3,7 +3,7 @@ package com.example.wanandroidclient.app.network.stateCallback
 /**
  * 作者　: mmh
  * 时间　: 2021/10/16
- * 描述　:
+ * 描述　: 列表数据状态类
  */
 data class ListDataUiState<T>(
     //是否请求数据
