@@ -1,18 +1,22 @@
 package com.example.wanandroidclient.ui.fragment.web
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
+import com.example.jetpackmvvm.ext.nav
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.base.BaseFragment
+import com.example.wanandroidclient.app.ext.hideSoftKeyboard
 import com.example.wanandroidclient.app.ext.init
+import com.example.wanandroidclient.app.ext.initClose
 import com.example.wanandroidclient.data.model.bean.AriticleResponse
 import com.example.wanandroidclient.data.model.bean.BannerResponse
 import com.example.wanandroidclient.databinding.FragmentWebBinding
 import com.example.wanandroidclient.viewmodel.state.WebViewModel
 import com.just.agentweb.AgentWeb
+import kotlinx.android.synthetic.main.fragment_web.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
 
@@ -64,8 +68,88 @@ class WebFragment : BaseFragment<WebViewModel, FragmentWebBinding>() {
         toolbar.run {
             //设置menu的关键代码
             mActivity.setSupportActionBar(this)
-            // TODO: 2021/10/23 初始化有返回键的toolbar 
+            //初始化有返回键的toolbar
+            initClose(mViewModel.showTitle){
+                hideSoftKeyboard(activity)
+                mAgentWeb?.let { web ->
+                    if (web.webCreator.webView.canGoBack()){
+                        web.webCreator.webView.goBack()
+                    }else{
+                        nav().navigateUp()
+                    }
+                }
+            }
         }
+
+        //这是AgentWeb的基本用法，具体查看github
+        preWeb =AgentWeb.with(this)
+            .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1,-1))
+            .useDefaultIndicator()
+            .createAgentWeb()
+            .ready()
+    }
+
+
+    override fun lazyLoadData() {
+        //加载网页
+        mAgentWeb = preWeb?.go(mViewModel.url)
+        //处理回退事件
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    mAgentWeb?.let { web ->
+                        if (web.webCreator.webView.canGoBack()) {
+                            web.webCreator.webView.goBack()
+                        } else {
+                            nav().navigateUp()
+                        }
+                    }
+                }
+            })
+    }
+
+
+    override fun createObserver() {
+        // TODO: 2021/10/24 这里是关于收藏时触发的效果
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.web_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+    //每一次显示菜单的时候都会调用次方法
+    //实现动态显示
+    //TODO
+   /* override fun onPrepareOptionsMenu(menu: Menu) {
+
+    }*/
+
+
+
+    // TODO: 2021/10/24 onOptionsItemSelected
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+    }*/
+
+
+
+
+    override fun onPause() {
+        mAgentWeb?.webLifeCycle?.onPause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        mAgentWeb?.webLifeCycle?.onResume()
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        mAgentWeb?.webLifeCycle?.onDestroy()
+        mActivity.setSupportActionBar(null)
+        super.onDestroy()
     }
 }
 

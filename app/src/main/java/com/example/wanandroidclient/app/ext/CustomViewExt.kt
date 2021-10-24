@@ -16,6 +16,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
+import com.example.jetpackmvvm.ext.util.toHtml
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.network.stateCallback.ListDataUiState
 import com.example.wanandroidclient.app.util.SettingUtil
@@ -63,6 +64,13 @@ fun LoadService<*>.showError(message: String = "") {
  */
 fun LoadService<*>.showEmpty() {
     this.showCallback(EmptyCallback::class.java)
+}
+
+/**
+ * 设置加载中
+ */
+fun LoadService<*>.showLoading() {
+    this.showCallback(LoadingCallback::class.java)
 }
 
 /**
@@ -182,12 +190,22 @@ fun Toolbar.init(titleStr: String = ""): Toolbar {
     return this
 }
 
-/**
- * 设置加载中
- */
-fun LoadService<*>.showLoading() {
-    this.showCallback(LoadingCallback::class.java)
+/*
+* 初始化有返回键的toolbar*/
+fun Toolbar.initClose(
+    titleStr: String = "",
+    backImg : Int = R.drawable.ic_back,
+    onBack : (toolbar : Toolbar) -> Unit
+) : Toolbar{
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    title = titleStr.toHtml()
+    setNavigationIcon(backImg)
+    setNavigationOnClickListener{onBack.invoke(this)}
+    return this
 }
+
+
+
 /*
 * 初始化loadSir*/
 fun loadServiceInit(view : View, callback: () -> Unit) :LoadService<Any>{
