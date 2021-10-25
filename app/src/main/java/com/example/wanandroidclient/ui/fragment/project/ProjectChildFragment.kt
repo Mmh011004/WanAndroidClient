@@ -2,17 +2,24 @@ package com.example.wanandroidclient.ui.fragment.project
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ConvertUtils
+import com.example.jetpackmvvm.ext.nav
+import com.example.jetpackmvvm.ext.navigateAction
 import com.example.wanandroidclient.R
+import com.example.wanandroidclient.app.appViewModel
 import com.example.wanandroidclient.app.base.BaseFragment
-import com.example.wanandroidclient.app.ext.init
-import com.example.wanandroidclient.app.ext.loadServiceInit
-import com.example.wanandroidclient.app.ext.showLoading
+import com.example.wanandroidclient.app.ext.*
 import com.example.wanandroidclient.app.weight.recyclerview.DefineLoadMoreView
+import com.example.wanandroidclient.app.weight.recyclerview.SpaceItemDecoration
 import com.example.wanandroidclient.databinding.IncludeListBinding
 import com.example.wanandroidclient.ui.adapter.AriticleAdapter
 import com.example.wanandroidclient.viewmodel.request.RequestProjectViewModel
 import com.example.wanandroidclient.viewmodel.state.ProjectViewModel
 import com.kingja.loadsir.core.LoadService
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import kotlinx.android.synthetic.main.include_list.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
 
 /**
@@ -67,7 +74,72 @@ class ProjectChildFragment: BaseFragment<ProjectViewModel, IncludeListBinding>()
             requestProjectViewModel.getProjectData(true, cid, isNew)
         }
         //初始化recyclerview
-        recyclerView
+        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+            it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
+
+            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+                //触发加载更多时请求数据
+                requestProjectViewModel.getProjectData(false, cid, isNew)
+            })
+
+            // TODO: 2021/10/25 FloatBtn
+        }
+
+        swipeRefresh.init {
+            //触发刷新的监听的时候执行 请求数据
+            requestProjectViewModel.getProjectData(true, cid, isNew)
+        }
+
+        articleAdapter.run {
+            //TODO setCollectClick
+
+
+            setOnItemClickListener { adapter, view, position ->
+                nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
+                    putParcelable("ariticleData", articleAdapter.data[position])
+                })
+            }
+            addChildClickViewIds(R.id.item_home_author,R.id.item_project_author)
+            setOnItemChildClickListener { adapter, view, position ->
+                when (view.id) {
+                    R.id.item_home_author, R.id.item_project_author -> {
+                        nav().navigateAction(
+                            R.id.action_mainFragment_to_lookInfoFragment,
+                            Bundle().apply {
+                                putInt("id", articleAdapter.data[position].userId)
+                            })
+                    }
+                }
+            }
+        }
+
+    }
+
+    override fun lazyLoadData() {
+        loadsir.showLoading()
+        requestProjectViewModel.getProjectData(true, cid, isNew)
+    }
+
+    override fun createObserver() {
+        requestProjectViewModel.projectDataState.observe(viewLifecycleOwner, Observer {
+            //项目文章数据
+            loadListData(it, articleAdapter, loadsir, recyclerView, swipeRefresh)
+            })
+        // TODO: 2021/10/25 关于收藏收藏
+
+        appViewModel.run {
+            // TODO: 2021/10/25 预留账户的改变
+
+            //监听全局的主题颜色改变
+            appColor.observeInFragment(this@ProjectChildFragment, Observer {
+                setUiTheme(it, floatbtn, swipeRefresh, loadsir, footView)
+            })
+            //监听全局的列表动画改编
+            appAnimation.observeInFragment(this@ProjectChildFragment, Observer {
+                articleAdapter.setAdapterAnimation(it)
+            })
+        }
+
 
     }
 

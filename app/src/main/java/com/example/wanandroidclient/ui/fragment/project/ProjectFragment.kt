@@ -9,6 +9,8 @@ import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
 import com.example.wanandroidclient.app.base.BaseFragment
 import com.example.wanandroidclient.app.ext.*
+import com.example.wanandroidclient.app.util.SettingUtil
+import com.example.wanandroidclient.app.weight.loadCallback.ErrorCallback
 import com.example.wanandroidclient.databinding.FragmentViewpagerBinding
 import com.example.wanandroidclient.viewmodel.request.RequestProjectViewModel
 import com.example.wanandroidclient.viewmodel.state.ProjectViewModel
@@ -69,9 +71,23 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
                 //自己加的一个
                 mDataList.add("最新项目")
                 mDataList.addAll(it.map { it.name })
+                fragments.add(ProjectChildFragment.newInstance(0, true))
+                it.forEach {classifyResponse ->
+                    fragments.add(ProjectChildFragment.newInstance(classifyResponse.id,false))
+                }
+                magic_indicator.navigator.notifyDataSetChanged()
+                view_pager.adapter?.notifyDataSetChanged()
+                view_pager.offscreenPageLimit = 5
+                loadsir.showSuccess()
             },{
                 //项目标题请求失败
+                //请求项目标题失败
+                loadsir.showCallback(ErrorCallback::class.java)
+                loadsir.setErrorText(it.errorMsg)
             })
+        })
+        appViewModel.appColor.observeInFragment(this, Observer {
+            setUiTheme(it,view_pager, loadsir)
         })
     }
 }
