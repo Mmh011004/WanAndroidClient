@@ -38,6 +38,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import kotlinx.android.synthetic.main.include_viewpager.view.*
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -277,7 +278,12 @@ fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): Bo
     return this
 }
 
+
+
+
+
 //初始化magic_indicator
+//有点多
 fun MagicIndicator.bindViewPager2(
     viewPage: ViewPager2,
     mStringList: List<String> = arrayListOf(),
@@ -323,8 +329,34 @@ fun MagicIndicator.bindViewPager2(
         }
     }
     this.navigator = commonNavigator
-    // TODO: 2021/10/24 页面切换的回调 
+
+    //设置页面改变的回调
+    viewPage.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            this@bindViewPager2.onPageSelected(position)
+            action.invoke(position)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2.onPageScrolled(position,positionOffset,positionOffsetPixels)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            this@bindViewPager2.onPageScrollStateChanged(state)
+        }
+    })
 }
+
+
+
+
 
 //初始化ViewPager2
 fun ViewPager2.init(

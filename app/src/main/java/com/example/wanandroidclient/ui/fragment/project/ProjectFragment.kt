@@ -3,6 +3,8 @@ package com.example.wanandroidclient.ui.fragment.project
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.example.jetpackmvvm.ext.view.parseState
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
 import com.example.wanandroidclient.app.base.BaseFragment
@@ -46,5 +48,30 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
             setUiTheme(it, viewpager_linear, loadsir)
         }
 
+    }
+
+    /*
+    * 懒加载*/
+    override fun lazyLoadData() {
+        //页面加载中
+        loadsir.showLoading()
+        //获取标题数据
+        requestProjectViewModel.getProjectTitleData()
+    }
+
+    override fun createObserver() {
+        requestProjectViewModel.titleData.observe(viewLifecycleOwner, Observer {data ->
+            //显示页面状态 parseState
+            parseState(data,{
+                //请求项目标题成功
+                mDataList.clear()
+                fragments.clear()
+                //自己加的一个
+                mDataList.add("最新项目")
+                mDataList.addAll(it.map { it.name })
+            },{
+                //项目标题请求失败
+            })
+        })
     }
 }
