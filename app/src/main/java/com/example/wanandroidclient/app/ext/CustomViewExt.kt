@@ -118,7 +118,7 @@ fun <T> loadListData(
                 loadService.showSuccess()
             }
         }
-        Log.d(TAG, "loadListData: ${baseQuickAdapter.data}")
+        //Log.d(TAG, "loadListData: ${baseQuickAdapter.data}")
     } else{
         //失败
         if (data.isRefresh) {

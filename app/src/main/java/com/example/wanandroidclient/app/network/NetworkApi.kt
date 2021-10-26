@@ -8,6 +8,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.google.gson.GsonBuilder
+import com.safframework.http.interceptor.AndroidLoggingInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -49,7 +50,8 @@ class NetworkApi :BaseNetworkApi(){
             //添加缓存拦截器 可传入缓存天数，不传默认7天
             addInterceptor(CacheInterceptor())
             // 日志拦截器
-            addInterceptor(LogInterceptor())
+            val loggingInterceptor = AndroidLoggingInterceptor.build()
+            addInterceptor(loggingInterceptor)
             //超时时间 连接、读、写
             connectTimeout(10, TimeUnit.SECONDS)
             readTimeout(5, TimeUnit.SECONDS)

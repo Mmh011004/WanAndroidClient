@@ -13,6 +13,7 @@ import com.example.jetpackmvvm.ext.nav
 import com.example.jetpackmvvm.ext.navigateAction
 import com.example.jetpackmvvm.ext.util.logd
 import com.example.jetpackmvvm.ext.view.parseState
+import com.example.jetpackmvvm.util.LogUtils
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
 import com.example.wanandroidclient.app.base.BaseFragment
@@ -162,7 +163,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun createObserver() {
         requestHomeViewModel.run {
-            Log.d(TAG, "createObserver: 开始执行")
+            LogUtils.debugInfo("HomeFragment","hhh")
             //监听首页文章列表的数据更新
             homeDataState.observe(viewLifecycleOwner, Observer {
                 loadListData(it, articleAdapter, loadSir, recyclerView, swipeRefresh)

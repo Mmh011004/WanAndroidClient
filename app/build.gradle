@@ -97,6 +97,9 @@ dependencies {
         exclude group: "com.android.support"
     }
     implementation 'com.louiscad.splitties:splitties-collections:2.1.1'
+    //日志拦截器
+    implementation 'com.safframework.log:saf-logginginterceptor:1.6.0'
+
 
     //项目核心框架
     implementation project(path: ':JetpackMvvm')
