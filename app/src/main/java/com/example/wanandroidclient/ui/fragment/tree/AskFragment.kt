@@ -17,6 +17,5 @@ class AskFragment : BaseFragment<TreeViewModel, IncludeListBinding>(){
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
     }
 }

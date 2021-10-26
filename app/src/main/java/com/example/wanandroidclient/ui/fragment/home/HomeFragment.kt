@@ -140,7 +140,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                     }
                     
                 }
-                Log.d(TAG, "initView: ${view.id}")
+                //Log.d(TAG, "initView: ${view.id}")
             }
 
         }

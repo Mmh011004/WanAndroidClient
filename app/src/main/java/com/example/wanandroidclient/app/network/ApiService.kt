@@ -55,4 +55,37 @@ interface ApiService {
     suspend fun getProjectNewData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
 
+    /**
+     * 广场列表数据
+     */
+    @GET("user_article/list/{page}/json")
+    suspend fun getSquareData(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
+    /**
+     * 每日一问列表数据
+     */
+    @GET("wenda/list/{page}/json")
+    suspend fun getAskData(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
+    /**
+     * 获取体系数据
+     */
+    @GET("tree/json")
+    suspend fun getSystemData(): ApiResponse<ArrayList<SystemResponse>>
+
+    /**
+     * 知识体系下的文章数据
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getSystemChildData(
+        @Path("page") pageNo: Int,
+        @Query("cid") cid: Int
+    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
+    /**
+     * 获取导航数据
+     */
+    @GET("navi/json")
+    suspend fun getNavigationData(): ApiResponse<ArrayList<NavigationResponse>>
+
 }
