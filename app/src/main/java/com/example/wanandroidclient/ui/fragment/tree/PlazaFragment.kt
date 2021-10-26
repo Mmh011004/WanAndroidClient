@@ -106,7 +106,7 @@ class PlazaFragment: BaseFragment<TreeViewModel, IncludeListBinding>() {
                     }
                 }
             }
-            Log.d(TAG, "initView: ${this@PlazaFragment.recyclerView.headerCount}")
+            //Log.d(TAG, "initView: ${this@PlazaFragment.recyclerView.headerCount}")
             //headerCount = 0,可能position - this@PlazaFragment.recyclerView.headerCount这一句是一个保险
         }
 
