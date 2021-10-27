@@ -66,4 +66,37 @@ class RequestTreeViewModel: BaseViewModel() {
         })
     }
 
+
+    /*
+    * 获取每日一问的数据*/
+    fun getAskData(isRefresh: Boolean){
+        if (isRefresh){
+            pageNo = 1
+        }
+        request({ apiService.getAskData(pageNo)}, {
+            //数据请求成功
+            pageNo++
+            val listDataUiState = ListDataUiState(
+                isSuccess = true,
+                isRefresh = isRefresh,
+                isEmpty = it.isEmpty(),
+                hasMore = it.hasMore(),
+                isFirstEmpty = isRefresh && it.isEmpty(),
+                listData = it.datas
+            )
+            askDataState.value = listDataUiState
+        }, {
+            //请求失败
+            val listDataUiState =
+                ListDataUiState(
+                    isSuccess = false,
+                    errorMessage = it.errorMsg,
+                    isRefresh = isRefresh,
+                    listData = arrayListOf<AriticleResponse>()
+                )
+            askDataState.value = listDataUiState
+        })
+
+    }
+
 }
