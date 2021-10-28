@@ -113,5 +113,26 @@ class AskFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
         loadsir.showLoading()
         requestTreeViewModel.getAskData(true)
     }
+
+    override fun createObserver() {
+        requestTreeViewModel.askDataState.observe(viewLifecycleOwner, Observer {
+            //加载数据的方法在这里
+            loadListData(it, articleAdapter, loadsir, recyclerView, swipeRefresh)
+        })
+
+        // TODO: 2021/10/28 关于收藏收藏
+
+        //监听全局修改主题颜色
+        appViewModel.run {
+            appColor.observeInFragment(this@AskFragment, Observer {
+                setUiTheme(it, floatbtn, swipeRefresh, loadsir, footView)
+            })
+
+            //监听全局的列表动画改编
+            appAnimation.observeInFragment(this@AskFragment, Observer {
+                articleAdapter.setAdapterAnimation(it)
+            })
+        }
+    }
 }
 
