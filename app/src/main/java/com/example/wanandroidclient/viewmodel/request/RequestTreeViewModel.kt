@@ -98,5 +98,28 @@ class RequestTreeViewModel: BaseViewModel() {
         })
 
     }
+    /*
+    * 获取体系数据
+    * */
+    fun getSystemData(){
+        request({ apiService.getSystemData()},{
+            //数据请求成功
+            val listDataUiState = ListDataUiState(
+                isSuccess = true,
+                listData = it
+            )
+            systemDataState.value = listDataUiState
+
+        },{
+            //请求失败
+            val listDataUiState = ListDataUiState(
+                isSuccess = false,
+                errorMessage = it.errorMsg,
+                listData = arrayListOf<SystemResponse>()
+            )
+            systemDataState.value = listDataUiState
+
+        })
+    }
 
 }

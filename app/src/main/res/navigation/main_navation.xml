@@ -24,6 +24,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_mainFragment_to_systemArrFragment"
+            app:destination="@id/systemArrFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -63,4 +70,8 @@
         android:id="@+id/lookInfoFragment"
         android:name="com.example.wanandroidclient.ui.fragment.lookinfo.LookInfoFragment"
         android:label="LookInfoFragment" />
+    <fragment
+        android:id="@+id/systemArrFragment"
+        android:name="com.example.wanandroidclient.ui.fragment.tree.SystemArrFragment"
+        android:label="SystemArrFragment" />
 </navigation>

@@ -6,6 +6,7 @@
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/drawable/bottom_selector.xml" value="0.26979166666666665" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/banner_itemhome.xml" value="0.24320652173913043" />
+        <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/flow_layout.xml" value="0.23550724637681159" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/fragment_home.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/fragment_look_info.xml" value="0.24320652173913043" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/fragment_main.xml" value="0.25364583333333335" />
@@ -22,6 +23,7 @@
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/include_viewpager.xml" value="0.2513586956521739" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/item_ariticle.xml" value="0.264" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/item_project.xml" value="0.4" />
+        <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/item_system.xml" value="0.21965579710144928" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/layout_collect_view_checked.xml" value="0.25181159420289856" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/layout_custom_progress_dialog_view.xml" value="0.24230072463768115" />
         <entry key="..\:/AndroidCode/WanAndroidClient/app/src/main/res/layout/layout_empty.xml" value="0.2463768115942029" />
