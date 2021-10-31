@@ -62,6 +62,7 @@ class SystemFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
             requestTreeViewModel.getSystemData()
         }
 
+        //设置点击事件
         systemAdapter.run {
             //点击大条目的跳转
             setOnItemClickListener { _, view, position ->

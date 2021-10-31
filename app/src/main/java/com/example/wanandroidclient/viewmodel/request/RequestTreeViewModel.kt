@@ -122,4 +122,34 @@ class RequestTreeViewModel: BaseViewModel() {
         })
     }
 
+    /*
+    * 获取体系子栏目的数据列表
+    * */
+    fun getSystemChildData(isRefresh: Boolean, cid: Int){
+        if (isRefresh) {
+            pageNo = 0
+        }
+        request({ apiService.getSystemChildData(pageNo, cid)},{
+            //数据请求成功
+            val listDataUiState = ListDataUiState(
+                isSuccess = true,
+                isRefresh = isRefresh,
+                isEmpty = it.isEmpty(),
+                hasMore = it.hasMore(),
+                isFirstEmpty = isRefresh && it.isEmpty(),
+                listData = it.datas
+            )
+            systemChildDataState.value = listDataUiState
+        },{
+            //数据请求失败
+            val listDataUiState = ListDataUiState(
+                isSuccess = false,
+                errorMessage = it.errorMsg,
+                isRefresh = isRefresh,
+                listData = arrayListOf<AriticleResponse>()
+            )
+            systemChildDataState.value = listDataUiState
+        })
+    }
+
 }

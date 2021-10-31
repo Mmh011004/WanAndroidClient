@@ -17,7 +17,7 @@ import com.google.android.flexbox.JustifyContent
 /**
  * 作者　: mmh
  * 时间　: 2021/10/28
- * 描述　:
+ * 描述　: 体系的适配器
  */
 class SystemAdapter(data: ArrayList<SystemResponse>) :
     BaseQuickAdapter<SystemResponse, BaseViewHolder>(R.layout.item_system, data){
