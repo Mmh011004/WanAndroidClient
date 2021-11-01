@@ -6,6 +6,8 @@ import com.example.jetpackmvvm.ext.nav
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
 import com.example.wanandroidclient.app.base.BaseFragment
+import com.example.wanandroidclient.app.ext.bindViewPager2
+import com.example.wanandroidclient.app.ext.init
 import com.example.wanandroidclient.app.ext.initClose
 import com.example.wanandroidclient.data.model.bean.SystemResponse
 import com.example.wanandroidclient.databinding.FragmentSystemBinding
@@ -53,6 +55,24 @@ class SystemArrFragment :BaseFragment<TreeViewModel, FragmentSystemBinding>(){
     }
 
     override fun lazyLoadData() {
-        //
+        //加入各个fragment
+        data.children.forEach{
+            fragments.add(SystemChildFragment.newInstance(it.id))
+        }
+        //初始化viewPager2
+        view_pager.init(this, fragments)
+        //初始化magic_indicator
+        //先来一个title集合
+        var titleList: ArrayList<String> = arrayListOf()
+        titleList.addAll(data.children.map {
+            it.name
+        })
+        magic_indicator.bindViewPager2(view_pager, titleList)
+
+        view_pager.currentItem = index
+    }
+
+    override fun createObserver() {
+
     }
 }

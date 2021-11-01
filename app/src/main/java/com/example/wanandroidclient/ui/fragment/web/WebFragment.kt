@@ -2,14 +2,12 @@ package com.example.wanandroidclient.ui.fragment.web
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import com.example.jetpackmvvm.ext.nav
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.base.BaseFragment
 import com.example.wanandroidclient.app.ext.hideSoftKeyboard
-import com.example.wanandroidclient.app.ext.init
 import com.example.wanandroidclient.app.ext.initClose
 import com.example.wanandroidclient.data.model.bean.AriticleResponse
 import com.example.wanandroidclient.data.model.bean.BannerResponse

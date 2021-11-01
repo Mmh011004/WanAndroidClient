@@ -73,5 +73,13 @@
     <fragment
         android:id="@+id/systemArrFragment"
         android:name="com.example.wanandroidclient.ui.fragment.tree.SystemArrFragment"
-        android:label="SystemArrFragment" />
+        android:label="SystemArrFragment" >
+        <action
+            android:id="@+id/action_systemArrFragment_to_lookInfoFragment"
+            app:destination="@id/lookInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 </navigation>
