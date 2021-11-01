@@ -152,4 +152,27 @@ class RequestTreeViewModel: BaseViewModel() {
         })
     }
 
+    /*
+    * 获取导航数据
+    * */
+    fun getNavigationData(){
+        request({ apiService.getNavigationData()},{
+            //数据请求成功
+            val listDataUiState = ListDataUiState(
+                isSuccess = true,
+                listData = it
+            )
+            navigationDataState.value = listDataUiState
+        },{
+            //数据请求失败
+            val listDataUiState = ListDataUiState(
+                isSuccess = false,
+                errorMessage = it.errorMsg,
+                listData = arrayListOf<NavigationResponse>()
+            )
+            navigationDataState.value = listDataUiState
+        })
+
+    }
+
 }

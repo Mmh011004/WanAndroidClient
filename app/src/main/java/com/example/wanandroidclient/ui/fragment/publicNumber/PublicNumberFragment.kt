@@ -6,22 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.wanandroidclient.R
+import com.example.wanandroidclient.app.base.BaseFragment
+import com.example.wanandroidclient.databinding.FragmentViewpagerBinding
+import com.example.wanandroidclient.viewmodel.request.RequestPublicNumberViewModel
+import com.example.wanandroidclient.viewmodel.state.TreeViewModel
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PublicNumberFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class PublicNumberFragment : Fragment() {
 
+class PublicNumberFragment : BaseFragment<RequestPublicNumberViewModel, FragmentViewpagerBinding>(){
+    override fun layoutId(): Int {
+        return R.layout.fragment_viewpager
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_public_number, container, false)
+    override fun initView(savedInstanceState: Bundle?) {
     }
 
 
