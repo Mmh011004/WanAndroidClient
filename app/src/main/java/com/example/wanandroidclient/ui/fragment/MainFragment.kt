@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.Observer
 import com.example.wanandroidclient.R
 import com.example.wanandroidclient.app.appViewModel
@@ -13,9 +14,11 @@ import com.example.wanandroidclient.app.ext.init
 import com.example.wanandroidclient.app.ext.initMain
 import com.example.wanandroidclient.databinding.FragmentMainBinding
 import com.example.wanandroidclient.viewmodel.state.MainViewModel
+import com.example.wanandroidclient.viewmodel.state.MeViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
-class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
+class MainFragment : BaseFragment<MeViewModel, FragmentMainBinding>() {
     override fun layoutId(): Int {
         return R.layout.fragment_main
     }
@@ -33,6 +36,9 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             }
         }
         //mainBottom.interceptLongClick(R.id.menu_main,R.id.menu_project,R.id.menu_system,R.id.menu_public)
+
+
+
 
     }
     override fun createObserver() {

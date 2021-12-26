@@ -104,6 +104,8 @@ dependencies {
     //日志拦截器
     implementation 'com.safframework.log:saf-logginginterceptor:1.6.0'
 
+    //抽屉布局
+    implementation("androidx.drawerlayout:drawerlayout:1.1.1")
 
     //项目核心框架
     implementation project(path: ':JetpackMvvm')

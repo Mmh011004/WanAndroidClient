@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.blankj.utilcode.util.ToastUtils
@@ -16,8 +17,12 @@ import com.example.wanandroidclient.app.base.BaseActivity
 import com.example.wanandroidclient.app.util.StatusBarUtil
 import com.example.wanandroidclient.databinding.ActivityMainBinding
 import com.example.wanandroidclient.viewmodel.state.MainViewModel
+import com.example.wanandroidclient.viewmodel.state.MeViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseActivity<MeViewModel, ActivityMainBinding>() {
 
     var exitTime = 0L
 
@@ -48,6 +53,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
             supportActionBar?.setBackgroundDrawable(ColorDrawable(it))
             StatusBarUtil.setColor(this, it, 0) }
+        // TODO: 2021/11/3 drawLayout
+        /*****/
+        setSupportActionBar(toolbar)
+        //创建抽屉开关
+        /*设置Drawerlayout的开关,并且和Home图标联动*/
+        val mToggle = ActionBarDrawerToggle(this, drawer_layout,toolbar,R.string.nav_app_bar_open_drawer_description, 0)
+        drawer_layout.addDrawerListener(mToggle)
+
+        /*同步drawerlayout的状态*/
+        mToggle.syncState()
     }
 
     override fun createObserver() {
@@ -64,6 +79,31 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         } else{
             Toast.makeText(applicationContext,"网呢？", Toast.LENGTH_SHORT)
         }
+    }
+
+    inner class ProxyClick{
+        /*
+        * 登录
+        * */
+        fun login(){}
+
+        /*
+        * 收藏*/
+        fun collect(){}
+
+        /*
+        * 积分
+        * */
+        fun integral(){}
+
+        /*
+        * todo*/
+        fun todo(){}
+
+        /*
+        * 设置
+        * */
+        fun setting(){}
     }
 
 }
